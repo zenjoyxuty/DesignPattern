@@ -9,6 +9,11 @@ import com.xuty.designpattern.bridge.LargeCoffee;
 import com.xuty.designpattern.bridge.Ordinary;
 import com.xuty.designpattern.bridge.SmallCoffee;
 import com.xuty.designpattern.bridge.Sugar;
+import com.xuty.designpattern.decorator.Boy;
+import com.xuty.designpattern.decorator.CheapCloth;
+import com.xuty.designpattern.decorator.ExpensiveCloth;
+import com.xuty.designpattern.decorator.Person;
+import com.xuty.designpattern.decorator.PersonCloth;
 import com.xuty.designpattern.flyweight.Ticket;
 import com.xuty.designpattern.flyweight.TicketFactory;
 
@@ -23,7 +28,19 @@ public class MainActivity extends AppCompatActivity {
          //bridgeMode();
 
         //享元模式
-        flyweight();
+        //flyweight();
+
+        //装饰模式
+        decorator();
+
+    }
+
+    private void decorator() {
+        Person person = new Boy();
+        PersonCloth clothExpensive= new ExpensiveCloth(person);
+        clothExpensive.dressed();
+        PersonCloth clothCheap = new CheapCloth(person);
+        clothCheap.dressed();
     }
 
     private void bridgeMode() {
