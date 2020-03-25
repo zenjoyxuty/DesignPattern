@@ -28,6 +28,9 @@ import com.xuty.designpattern.proxy.dynamicproxy.DynamicProxy;
 import com.xuty.designpattern.proxy.staticproxy.ILawsuit;
 import com.xuty.designpattern.proxy.staticproxy.Lawyer;
 import com.xuty.designpattern.proxy.staticproxy.XiaoMin;
+import com.xuty.designpattern.template.AbstractComputer;
+import com.xuty.designpattern.template.CoderComputer;
+import com.xuty.designpattern.template.MilitaeryComputer;
 
 import java.lang.reflect.Proxy;
 
@@ -64,7 +67,17 @@ public class MainActivity extends AppCompatActivity {
 
 
         //中介者模式
-        mediator();
+        //mediator();
+
+        //模板模式
+        template();
+    }
+
+    private void template() {
+        AbstractComputer computer = new CoderComputer();
+        computer.startUp();
+        computer = new MilitaeryComputer();
+        computer.startUp();
     }
 
     private void mediator() {
