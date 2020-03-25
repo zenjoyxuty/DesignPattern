@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.xuty.designpattern.adapter.Volt220;
+import com.xuty.designpattern.adapter.classadapter.VolAdapter;
+import com.xuty.designpattern.adapter.object.VoltAdapter;
 import com.xuty.designpattern.bridge.Coffee;
 import com.xuty.designpattern.bridge.LargeCoffee;
 import com.xuty.designpattern.bridge.Ordinary;
@@ -16,6 +19,17 @@ import com.xuty.designpattern.decorator.Person;
 import com.xuty.designpattern.decorator.PersonCloth;
 import com.xuty.designpattern.flyweight.Ticket;
 import com.xuty.designpattern.flyweight.TicketFactory;
+import com.xuty.designpattern.mediator.CDDevice;
+import com.xuty.designpattern.mediator.CPU;
+import com.xuty.designpattern.mediator.GraphicsCard;
+import com.xuty.designpattern.mediator.MainBoard;
+import com.xuty.designpattern.mediator.SoundCard;
+import com.xuty.designpattern.proxy.dynamicproxy.DynamicProxy;
+import com.xuty.designpattern.proxy.staticproxy.ILawsuit;
+import com.xuty.designpattern.proxy.staticproxy.Lawyer;
+import com.xuty.designpattern.proxy.staticproxy.XiaoMin;
+
+import java.lang.reflect.Proxy;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,8 +45,71 @@ public class MainActivity extends AppCompatActivity {
         //flyweight();
 
         //装饰模式
-        decorator();
+        //decorator();
 
+        //适配器模式
+
+        //类
+
+        //VolAdapter volAdapter = new VolAdapter();
+       // System.out.println("类输出电压"+volAdapter.getVol5());
+
+        //对象
+        //VoltAdapter voltAdapter = new VoltAdapter(new Volt220());
+        //System.out.println("对象输出电压"+voltAdapter.getVol5());
+
+        //代理模式
+        //staticProxy();
+       // dynamicProxy();
+
+
+        //中介者模式
+        mediator();
+    }
+
+    private void mediator() {
+        MainBoard mainBoard = new MainBoard();
+        CDDevice  cdDevice = new CDDevice(mainBoard);
+        CPU cpu = new CPU(mainBoard);
+        SoundCard soundCard = new SoundCard(mainBoard);
+        GraphicsCard graphicsCard = new GraphicsCard(mainBoard);
+
+        mainBoard.setCdDevice(cdDevice);
+        mainBoard.setCpu(cpu);
+        mainBoard.setSoundCard(soundCard);
+        mainBoard.setGraphicsCard(graphicsCard);
+
+        cdDevice.load();
+
+    }
+
+    private void dynamicProxy() {
+        ILawsuit xiaomin = new XiaoMin();
+        DynamicProxy proxy = new DynamicProxy(xiaomin);
+
+        ClassLoader classLoader = xiaomin.getClass().getClassLoader();
+        ILawsuit lawsuit = (ILawsuit) Proxy.newProxyInstance(classLoader,new Class[]{ILawsuit.class},proxy);
+        lawsuit.submit();
+
+        lawsuit.burden();
+
+        lawsuit.defend();
+
+        lawsuit.finish();
+    }
+
+    private void staticProxy() {
+        ILawsuit xiaomin = new XiaoMin();
+
+        ILawsuit lawsuit = new Lawyer(xiaomin);
+
+        lawsuit.submit();
+
+        lawsuit.burden();
+
+        lawsuit.defend();
+
+        lawsuit.finish();
     }
 
     private void decorator() {
