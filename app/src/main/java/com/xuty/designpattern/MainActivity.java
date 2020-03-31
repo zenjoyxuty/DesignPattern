@@ -24,10 +24,16 @@ import com.xuty.designpattern.mediator.CPU;
 import com.xuty.designpattern.mediator.GraphicsCard;
 import com.xuty.designpattern.mediator.MainBoard;
 import com.xuty.designpattern.mediator.SoundCard;
+import com.xuty.designpattern.observable.Coder;
+import com.xuty.designpattern.observable.DevTechFrontier;
 import com.xuty.designpattern.proxy.dynamicproxy.DynamicProxy;
 import com.xuty.designpattern.proxy.staticproxy.ILawsuit;
 import com.xuty.designpattern.proxy.staticproxy.Lawyer;
 import com.xuty.designpattern.proxy.staticproxy.XiaoMin;
+import com.xuty.designpattern.response.Boss;
+import com.xuty.designpattern.response.Director;
+import com.xuty.designpattern.response.GroupLeader;
+import com.xuty.designpattern.response.Manager;
 import com.xuty.designpattern.template.AbstractComputer;
 import com.xuty.designpattern.template.CoderComputer;
 import com.xuty.designpattern.template.MilitaeryComputer;
@@ -70,7 +76,39 @@ public class MainActivity extends AppCompatActivity {
         //mediator();
 
         //模板模式
-        template();
+        //template();
+
+
+        //观察者模式
+        //observable();
+
+        response();
+    }
+
+    private void response() {
+        GroupLeader groupLeader = new GroupLeader();
+        Director director = new Director();
+        Manager manager = new Manager();
+        Boss boss = new Boss();
+
+        groupLeader.nextHandler = director;
+        director.nextHandler = manager;
+        manager.nextHandler = boss;
+        groupLeader.handleRequest(50000);
+    }
+
+    private void observable() {
+        DevTechFrontier devTechFrontier = new DevTechFrontier();
+
+        Coder coder1 = new Coder("code1");
+        Coder coder2 = new Coder("code2");
+        Coder coder3 = new Coder("code3");
+
+        devTechFrontier.addObserver(coder1);
+        devTechFrontier.addObserver(coder2);
+        devTechFrontier.addObserver(coder3);
+
+        devTechFrontier.postNewPublication("新一期发布了");
     }
 
     private void template() {
